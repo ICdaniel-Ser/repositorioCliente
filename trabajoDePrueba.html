@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Incidencia</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .form-container {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            margin-top: 50px;
+        }
+
+        .image-container {
+            width: 200px;
+            height: 200px;
+            margin-right: 20px;
+            border: 1px solid #ccc;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .form {
+            width: 300px;
+        }
+
+        .form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form input, .form select, .form textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .form button:hover {
+            background-color: #218838;
+        }
+
+        .error-message {
+            background-color: red;
+            color: white;
+            padding: 10px;
+            margin-bottom: 10px;
+            display: none;
+        }
+
+        .form .error {
+            border: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <div class="image-container" id="image-container">
+            <!-- Imagen dinámica aquí -->
+             <img src="/img/Incidente.avif" alt="">
+        </div>
+
+        <div class="form">
+            <div class="error-message" id="error-message"></div>
+
+            <label for="tipo-incidencia">Tipo de Incidencia</label>
+            <select id="tipo-incidencia" onchange="cambiarImagen()">
+                <option value="seleccion">Selecciona una opción</option>
+                <option value="distribucion">Distribución</option>
+                <option value="oficina">Oficina</option>
+                <option value="produccion">Producción</option>
+            </select>
+
+            <label for="numero-serie">Número de Serie</label>
+            <input type="text" id="numero-serie" placeholder="Ej: 123ABCD1">
+
+            <button type="button" id="mostrar-descripcion-btn" onclick="mostrarDescripcion()">Mostrar descripción</button>
+
+            <textarea id="descripcion" placeholder="Describa la incidencia..." style="display: none;"></textarea>
+
+            <label>
+                <input type="checkbox" id="condiciones">
+                Acepto las condiciones del servicio
+            </label>
+
+            <button type="button" onclick="validarFormulario()">Enviar datos</button>
+        </div>
+    </div>
+
+    <script>
+        function cambiarImagen() {
+            const tipoIncidencia = document.getElementById('tipo-incidencia').value;
+            const imageContainer = document.getElementById('image-container');
+            
+            let img = '';
+
+            switch(tipoIncidencia) {
+                case 'seleccion':
+                    img = '/img/Incidente.avif';
+                    break;
+                case 'distribucion':
+                    img= '/img/Distribucion.jpg'; // Reemplaza con una imagen real
+                    break;
+                case 'oficina':
+                    img = '/img/Oficina.jpg'; // Reemplaza con una imagen real
+                    break;
+                case 'produccion':
+                    img = '/img/Produccion.jpg'; // Reemplaza con una imagen real
+                    break;
+                default:
+                    img = '';
+            }
+
+            if (img) {
+                imageContainer.innerHTML = `<img src="${img}" alt="Tipo de incidencia">`;
+            } else {
+                imageContainer.innerHTML = '';
+            }
+        }
+
+        function mostrarDescripcion() {
+            const descripcion = document.getElementById('descripcion');
+            descripcion.style.display = 'block';
+        }
+
+        function validarFormulario() {
+            const numeroSerie = document.getElementById('numero-serie').value;
+            const condiciones = document.getElementById('condiciones').checked;
+            const errorMessage = document.getElementById('error-message');
+            const numeroSerieField = document.getElementById('numero-serie');
+            let error = '';
+
+            // Validación de Número de Serie
+            const numeroSeriePattern = /^[0-9]{3}[A-Z]{4}[12A]$/;
+            if (!numeroSeriePattern.test(numeroSerie)) {
+                error += 'El número de serie es incorrecto. Debe comenzar con tres números, seguir con cuatro letras mayúsculas, y terminar con un número 1 o 2, o la letra A.<br>';
+                numeroSerieField.classList.add('error');
+            } else {
+                numeroSerieField.classList.remove('error');
+            }
+
+            // Validación de aceptación de condiciones
+            if (!condiciones) {
+                error += 'Debe aceptar las condiciones del servicio.<br>';
+            }
+
+            // Mostrar mensajes de error o enviar
+            if (error) {
+                errorMessage.innerHTML = error;
+                errorMessage.style.display = 'block';
+            } else {
+                errorMessage.style.display = 'none';
+                alert('Formulario enviado con éxito.');
+            }
+        }
+    </script>
+
+</body>
+</html>

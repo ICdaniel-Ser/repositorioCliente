@@ -1,0 +1,116 @@
+<html>
+
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <title>Ejercicio DOM básico</title>
+
+</head>
+
+ 
+
+<body>
+
+    <p>
+
+        Prueba A
+
+        <a href="http://prueba">enlace A</a>
+
+        Prueba B
+
+        <a href="http://prueba2">enlace B</a>
+
+        Prueba C
+
+    </p>
+
+ 
+
+    <p>
+
+        Prueba D
+
+        <a href="http://prueba">enlace C</a>
+
+        Prueba E
+
+        <a href="http://prueba3">enlace D</a>
+
+        Prueba F
+
+    </p>
+
+ 
+
+    <p>
+
+        Prueba G
+
+        <a href="http://prueba">enlace G</a>
+
+        Prueba H
+
+        <a href="http://prueba4">enlace H</a>
+
+        Prueba I
+
+        <a href="http://prueba5">enlace I</a>
+
+        Prueba J.
+
+    </p>
+
+  <script>
+    var  links = document.querySelectorAll('a');
+    //ejercicio a
+    //Con esto seleccionamos todas las etiquetas a;
+    console.log(links);
+    //Con esto imprimimos el número de enlaces que hay en la página;
+    //alert(links.length);
+    //ejercicio b
+    var ultiEnlace =  links[links.length - 2];
+    //Esto nos permite sacar el enlace referenciado
+    //alert (ultiEnlace.href);
+    //ejercicio c
+    var contador = 0;
+   
+    for(var i=0; i < links.length;i++){
+        if(links[i].href == "http://prueba/"){
+            //Fallaba porque al enlace le faltaba la ultima barra.
+           contador = contador + 1;
+        }
+    }
+    alert (contador);
+    console.log(contador); 
+    //Ejercicio D
+    let tercerParrafos = document.querySelectorAll('p')[2];
+    //Empleo el querySelectorAll, para seleccionar  todos los parrafos y 
+    //luego selecciono el tercero(hay que recordar que se empieza contar desde 0)
+
+    let enlacesEnTercerParrafo =  tercerParrafos.getElementsByTagName('a').length;
+    //Busca todos los elementos 'a' y nos devuelve la cantidad, guardandola en la variable.
+    //console.log(enlacesEnTercerParrafo);
+
+    //Ejercicio C.2
+    //Selecciona todos los elementos <a> del documento
+    var enlaces = document.getElementsByTagName("a");
+    // Inicializa un contador
+    var contador2 = 0;
+    // Recorre todos los enlaces
+    for (var i = 0; i < enlaces.length; i++) {
+    // Verifica si el atributo href del enlace es "http://prueba"
+        if (enlaces[i].href === "http://prueba/") {
+        // Incrementa el contador si coincide
+        contador2++;
+     }
+    }
+     console.log(contador2);
+
+
+  </script>
+
+</body>
+
+</html>
